@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+    <title>leandro precaro</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;  }
+    </style>
+</head>
+<body>
+
+<script>
+
+var config = {
+    type: Phaser.AUTO,
+    width: 800,
+    height: 600,
+
+    scene: {
+        preload: preload,
+        create: create,
+        update: update
+    }
+};
+
+var game = new Phaser.Game(config);
+
+var passarinho
+
+function preload() {
+    this.load.image('fundo', 'assets/foto de fundo.png')
+    //responsavel por carregar a imagem de fundo
+    this.load.spritesheet('bird', 'assets/bird-red.png', {frameWidth: 75, frameHeigth: 75}) 
+    //responsavel por carregar a sprite/animação do passaro
+}
+
+function create() {
+    this.add.image(400, 300, 'fundo').setScale(1.2)
+    //adiciona o tamanho da imagem dentro do site
+   passarinho = this.add.sprite(100, 100, 'bird').setScale(1.3)
+    //adiciona a sprite do passaro dentro do site
+
+    this.anims.create({
+        key: 'fly',//nome da chave
+        frames: this.anims.generateFrameNumbers('bird', {start: 0, end:7}),//quantidades de frames 
+        frameRate: 10,//frames por segundo
+        repeat: -1,//se colocou numero negativo para que a animação seja infinita
+    })
+
+    passarinho.anims.play('fly', true)
+    //faz com que tudo que foi escrito no bloco this.anims.create aconteça
+}
+
+function update() { 
+
+    if(passarinho.x === 100) {
+        passarinho.setFlip(false, false)
+        passarinho.ida = true;
+        //quando o passarinho bater na coodernada 100 do eixo x, o movimento de ida será verdadeiro
+    }
+
+    if(passarinho.x < 700 && passarinho.ida === true) {
+        console.log('enquanto o x for menor que 700 e ida estiver verdadeiro, o passaro ira adicionar 5 em sua coordenada x')
+        passarinho.x +=5 ;
+    }
+
+    if(passarinho.x === 700) {
+        passarinho.setFlip(true, false)
+         passarinho.ida = false;
+         //quando o passarinho bater na coordenada 700 do eixo x, o movimento de ida será falso
+    }
+
+    if(passarinho.x > 100 && passarinho.ida === false) {
+        console.log('enquanto o x for maior que 100 e ida estiver falso, o passarinho ira subtrair 5 de sua coordenada x  ')
+        passarinho.x -=5;
+    }
+
+    if(passarinho.y ===100) {
+    passarinho.sobe = false
+    //quando o passarinho bater na coordenada 300 do eixo y, o movimento de subir será falso
+    }
+
+    if(passarinho.y < 500 && passarinho.sobe === false) {
+        passarinho.y += 5
+        //quando o passarinho estiver em uma coordenad menor que 500 e passarinho.sobe não estiver valendo, o passarinho ira ganhar 5 na coordenada y
+    }
+
+    if(passarinho.y ===500) {
+    passarinho.sobe = true
+    //quando o passarinho bater na coordenada 500 do eixo y, o movimento de subir será verdadeiro
+    }
+
+    if(passarinho.y > 100 && passarinho.sobe === true) {
+        passarinho.y -=5
+        //quando o passarinho estiver em uma coordenada maior que 100 e passarinho.sobe estiver valendo, o passarinho irá perder 5 na coordenada yhttps://github.com/Leandro-Filho/ativaidade-ponderada-2-kizzy.git
+    }
+
+    
+}
+
+
+</script>
+
+</body>
+</htm
